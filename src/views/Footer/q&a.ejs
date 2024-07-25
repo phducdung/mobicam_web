@@ -1,0 +1,157 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camera giám sát hành trình MobiCAM</title>
+    <%- include('../partials/head.ejs') %>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #eff2f7;
+      }
+      .footer_follow-item .change_image_area {
+        display: none;
+      }
+      .root {
+        margin-top: 120px;
+        min-height: 100vh;
+        padding-top: 50px;
+      }
+
+      section {
+        position: relative;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      .head h3 {
+        color: #ff5e5e;
+        font-size: 30px;
+        margin-bottom: 50px;
+        font-weight: 700;
+      }
+
+      .qa-body {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .qa-item {
+        cursor: pointer;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--white-color);
+      }
+
+      .qa-item-tab {
+        margin-bottom: 10px;
+        cursor: pointer;
+        padding: 8px 10px;
+        border-radius: 4px;
+        min-width: 260px;
+        color: #333;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        /* Độ trễ và hiệu ứng màu nền */
+      }
+
+      .tab-qa-name {
+        align-items: center;
+        color: #333;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .qa-item-tab.selected {
+        background-color: #d3d3d3;
+        /* Màu nền khi được chọn */
+      }
+
+      .qa-item-tab:hover,
+      .qa-item-tab:active {
+        background-color: #d3d3d3;
+        cursor: pointer;
+      }
+
+      .content-qa-section {
+        margin: 20px 30px 20px 20px;
+        border-bottom: 2px solid white;
+        padding-left: 12px;
+        max-width: 480px;
+      }
+
+      .qa-name {
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+
+        padding: 0px 0px 0px 30px;
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: 600;
+        align-items: baseline;
+      }
+
+      .qa-desc {
+        font-size: 1rem;
+        font-family: var(--font) !important;
+        line-height: 2rem;
+        padding: 8px 30px;
+        background: var(--white-color);
+        display: none;
+      }
+      .selected{
+        background-color: #d3d3d3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+
+      <span id="qa-id" class="d-none"> <%=id%> </span>
+      <span id="qa-lang"> <%=lang%> </span>
+      <%- include('../partials/header.ejs') ,{headerSection} %>
+      <div class="root container">
+        <section>
+          <div class="head">
+            <h3><%=lang === 'vi' ? 'Hỏi đáp' : 'Question and Answer'%></h3>
+          </div>
+          <div class="qa-body row">
+            <div class="list-qa col-lg-4 col-sm-12">
+              <% listQA.forEach(function(qaItem){ %>
+              <div
+                class="qa-item-tab hide-on-mobile"
+                id="tab_<%= qaItem.id %>"
+                onclick="SelectQA('<%= qaItem.id %>')"
+              >
+                <div class="tab-qa-name">
+                  <% const field=`name_${lang}`; %> <%= qaItem[field]%>
+                </div>
+              </div>
+
+              <% }) %>
+              <select
+                class="hide-on-pc show-on-mobile form-select mb-3"
+                name=""
+                id="optTap_qa"
+              >
+                <% listQA.forEach(function(qaItem){ %>
+                <option value="<%= qaItem.id %>">
+                  <% const field=`name_${lang}`; %> <%= qaItem[field] %>
+                </option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="content-qa col-lg-8 col-sm-12"></div>
+          </div>
+        </section>
+      </div>
+      <%- include('../partials/footer.ejs'),{footerSection:""} %>
+    </div>
+    <%- include('../partials/foot.ejs') %>
+    <script src="/js/ejsPolicy.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

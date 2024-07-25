@@ -1,0 +1,82 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camera giám sát hành trình MobiCAM</title>
+    <%- include('../partials/head.ejs') %>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #eff2f7;
+      }
+
+      .footer_follow-item .change_image_area{
+        display: none !important;
+      }
+      .root {
+        margin-top: 120px;
+        min-height: 100vh;
+        padding-top: 50px;
+      }
+
+      section {
+        position: relative;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      .policy-head h3 {
+        color: #ff5e5e;
+        font-size: 30px;
+        margin-bottom: 50px;
+        font-weight: 700;
+      }
+      .policy-body ul li {
+        list-style: none;
+      }
+
+      .policy-body ol {
+        list-style: none;
+      }
+      .policy-body {
+        display: flex;
+        width: 100%;
+
+        margin-bottom: 50px;
+        border-radius: 8px;
+       
+      }
+      .main-content{
+        text-align: justify;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <%- include('../partials/header.ejs') ,{headerSection} %>
+      <div class="root container">
+        <section class="row">
+          <div class="policy-head coop-head">
+            <h3>
+              <% if (id == 1) { %> <%= lang == 'vi' ? 'Chính sách đại lý' :
+              'Agency policy' %> <% } %>
+            </h3>
+          </div>
+          <div class="policy-body col-lg-12 col-sm-12 col-md-12">
+           <div class="main-content p-4 bg-light">
+            <%- content %>
+           </div>
+          </div>
+        </section>
+      </div>
+      <%- include('../partials/footer.ejs'),{footerSection:""} %>
+    </div>
+
+    <script src="/js/ejsPolicy.js"></script>
+    <script src="https://my.mobicam.vn/static/js/chatplugin.js?v=0.12"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

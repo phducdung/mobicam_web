@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobicam - tất cả tin tức</title>
+    <%- include('../partials/head.ejs') ,{headerSection}%>
+  </head>
+
+  <body>
+    <div class="wrapper wrapper_new_page">
+      <%- include('../partials/header.ejs') %>
+      <section class="news pt-3 pb-5">
+        <div class="container">
+          <h2 class="text-primary text-center fw-bold mb-2">Tin tức</h2>
+          <div class="wrapper_dot">
+            <div class="dot"></div>
+          </div>
+          <div class="content mt-4">
+            <div class="row">
+              <% for (let i=0; i < news.length; i++) { %>
+              <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <% var slug=`slug_${lang}`; %>
+
+                <a
+                  href="/tintuc/chitiet/<%=lang %>/<%= news[i][slug] %>"
+                  class="item rounded d-block text-decoration-none overflow-hidden position-relative pb-2"
+                >
+                  <div class="thumb_news overflow-hidden">
+                    <img src="<%= news[i].img %>" alt="thumb_new" />
+                  </div>
+                  <div
+                    class="title fw-bold pt-1 pe-3 ps-3 pb-4 text-decoration"
+                  >
+                    <% var fieldName=`title_${lang}`; %> <%= news[i][fieldName]
+                    %>
+                  </div>
+                  <span
+                    class="date position-absolute pt-2 text-end pe-3"
+                    style="
+                      font-size: 0.9rem;
+                      color: gray;
+                      bottom: 15px;
+                      right: 0;
+                    "
+                  >
+                    <i class="fa-regular fa-clock"></i>
+                    <%= news[i].updatedAt %>
+                  </span>
+                </a>
+              </div>
+              <% } %>
+            </div>
+          </div>
+          <% if (pagination.totalPages > 1) { %>
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <!-- First Page Link -->
+              <% if (pagination.page > 1) { %>
+
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="/tintuc/<%=lang%>?page=<%= pagination.page - 1 %>"
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <% } %>
+
+              <!-- Page Numbers -->
+              <% const maxPagesToShow = 5; const halfPagesToShow =
+              Math.floor(maxPagesToShow / 2); let startPage = Math.max(1,
+              pagination.page - halfPagesToShow); let endPage =
+              Math.min(pagination.totalPages, pagination.page +
+              halfPagesToShow); if (endPage - startPage + 1 < maxPagesToShow) {
+              if (startPage === 1) { endPage = Math.min(startPage +
+              maxPagesToShow - 1, pagination.totalPages); } else if (endPage ===
+              pagination.totalPages) { startPage = Math.max(endPage -
+              maxPagesToShow + 1, 1); } } for (let i = startPage; i <= endPage;
+              i++) { %>
+              <li
+                class="page-item <%= pagination.page === i ? 'active' : '' %>"
+              >
+                <a class="page-link" href="/tintuc/<%=lang%>?page=<%= i %>"
+                  ><%= i %></a
+                >
+              </li>
+              <% } %>
+
+              <!-- Next Page Link -->
+              <% if (pagination.page < pagination.totalPages) { %>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="/tintuc/<%=lang%>?page=<%= pagination.page + 1 %>"
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+
+              <% } %>
+            </ul>
+          </nav>
+          <% } %>
+        </div>
+      </section>
+      <%- include('../partials/footer.ejs'),{footerSection} %>
+    </div>
+  </body>
+  <%- include('../partials/foot.ejs') %>
+  <script>
+    try {
+      const chatApp = new ChatApp__({
+        payload: {
+          ui: {
+            right: "10px",
+            bottom: "10px",
+          },
+        },
+      });
+      chatApp.create();
+    } catch (error) {
+      console.log("ChatApp error: ", error);
+    }
+  </script>
+  <script src="/js/main.js"></script>
+</html>

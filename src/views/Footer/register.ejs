@@ -1,0 +1,241 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera giám sát hành trình MobiCAM</title>
+    <%- include('../partials/head.ejs') %>
+        <style>
+            :root {
+                --primary-color: #0c5adb;
+                --text-color: #616161;
+                --height-header: 78px;
+
+            }
+
+      
+
+            section {
+                position: relative;
+                max-width: 960px;
+                margin: 0 auto;
+            }
+            .footer_follow-item .change_image_area{
+                display: none;
+              }
+            .root {
+                padding: calc(68px + var(--height-header) + 40px) 0 60px;
+            }
+
+            .wrapper_registration-signin.active {
+                display: flex;
+                justify-content: space-between;
+
+            }
+
+            .wrapper_registration-signin {
+                justify-content: space-around;
+            }
+
+    
+            img {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                object-fit: contain;
+            }
+
+
+            .cooperate_form {
+                position: relative;
+            }
+
+            .cooperate_form>.form_head {
+                text-align: center;
+                text-transform: uppercase;
+                font-weight: 600;
+                margin-bottom: 40px;
+                color: #0c5adb;
+                letter-spacing: 2px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+       
+
+            .cooperate_form .form_item {
+                position: relative;
+                margin-bottom: 22px;
+            }
+
+            .cooperate_miss_pass {
+                text-align: end;
+            }
+
+            .cooperate_sigin-container,
+            .cooperate_signup-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .cooperate_form .cooperate-input {
+                color: #616161;
+                border: 1px solid #1b97d6;
+                height: 40px;
+            }
+
+            .cooperate_form .error-text {
+                position: absolute;
+                padding-top: 6px;
+                font-size: 12px;
+                color: #ff0000;
+                font-weight: 500;
+                font-style: italic;
+                bottom: -18px;
+            }
+
+            .form_flex {
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .form_ao {
+position: absolute;
+                width: 36%;
+                height: 34px;
+                right: 0%;
+                z-index: 2;
+            }
+
+            .cooperate_login {
+                padding: 10px 20px;
+                outline: none;
+                border: none;
+                border-radius: 4px;
+background: var(--primary-color);
+                font-weight: 500;
+                color: #ffffff;
+                font-size: 1.2rem;
+                margin-top: 10px;
+                width: 100%;
+            }
+
+
+            .cooperate_sigin {
+                color: var(--text-color);
+                font-size: 14px;
+            }
+
+            .cooperate_sigin-link {
+                color: var(--primary-color);
+                padding: 0 4px;
+                font-weight: 500;
+            }
+
+            .form-control:disabled,
+            .form-control[readonly] {
+                background-color: #e9ecef;
+                opacity: 1;
+                width: 50%;
+                margin-left: 30px;
+            }
+
+            .cooperate-line {
+                height: 1px;
+                background-color: var(--primary-color);
+                width: 100%;
+                flex: 1;
+            }
+
+            .cooperate_sigin-link {
+                color: var(--primary-color);
+                padding: 0 4px;
+                font-size: 16px;
+                font-weight: 500;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="app">
+        <%- include('../partials/header.ejs') ,{headerSection} %>
+            <div class="root container">
+                <section class="">
+                    <div class="wrapper_registration-signin active row">
+                        <div class="registration_signup-img col-lg-6 col-sm-12 d-flex">
+                            <img src="/images/introduce/contact_register.png" alt="" class="signup-img">
+                        </div>
+                        <div class="cooperate_wrapper-form  col-lg-6 col-sm-12">
+                            <form action="Registration/login" class="cooperate_form" id="form-login" "="" method=" post"
+                                enctype="multipart/form-data">
+                                <h1 class="form_head">
+
+                                    <% if (lang=='vi' ) { %>    Đăng kí đại lí <% } else { %> 
+                                        Register Agency
+                                        <% } %>
+                                  
+                                </h1>
+                                <div class="form-group row">
+                                    <div class="form_item col-md-12 col-sm-12 col-xs-12">
+                                        <input type="text" name="data_post[user]" class="form-control cooperate-input"
+                                            id="login_user" placeholder="Tên công ty">
+                                        <div class="error-text"></div>
+                                    </div>
+                                    <div class="form_item col-md-12 col-sm-12 col-xs-12">
+                                        <input type="text" class="form-control cooperate-input" id="login_password"
+                                            name="data_post[password]" placeholder="Địa chỉ">
+                                        <div class="error-text"></div>
+                                    </div>
+                                    <div class="form_item col-md-12 col-sm-12 col-xs-12">
+<input type="text" name="data_post[user]" class="form-control cooperate-input"
+                                            id="login_user" placeholder="Email">
+                                        <div class="error-text"></div>
+                                    </div>
+                                    <div class="form_item col-md-12 col-sm-12 col-xs-12">
+                                        <input type="text" class="form-control cooperate-input" id="login_password"
+                                            name="data_post[password]" placeholder="Số điện thoại">
+                                        <div class="error-text"></div>
+                                    </div>
+                                    <div class="form_item col-md-12 col-sm-12 col-xs-12">
+                                        <input type="password" class="form-control cooperate-input" id="login_password"
+                                            name="data_post[password]" placeholder="Mật khẩu">
+                                        <div class="error-text"></div>
+                                    </div>
+                                    <div class="form_item col-md-12 col-sm-12 col-xs-12">
+                                        <button class="cooperate_login" type="submit">
+                                            <% if (lang=='vi' ) { %>   Đăng kí<% } else { %> 
+                                               Register
+                                                <% } %>
+                                          
+                                        </button>
+                                    </div>
+                                    <div class="cooperate_sigin-container col-md-12 col-sm-12 col-xs-12">
+                                        <div class="cooperate-line"></div>
+                                        <a href="?id=0" class="cooperate_sigin-link">
+                                            <% if (lang=='vi' ) { %>   Đăng nhập<% } else { %> 
+                                                Login
+                                                 <% } %>
+                                            </a>
+                                        <div class="cooperate-line"></div>
+                                    </div>
+
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <%- include('../partials/footer.ejs'),{footerSection:""} %>
+    </div>
+    <%- include('../partials/foot.ejs') %>
+    <script src="/js/ejsPolicy.js"></script>
+    <script src="/js/main.js"></script>
+
+</body>
+
+</html>

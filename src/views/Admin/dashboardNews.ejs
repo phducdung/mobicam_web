@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dashboard admin</title>
+
+    <%- include('../partials/head.ejs') %>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css"
+    />
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"
+    ></script>
+  </head>
+  <style></style>
+  <body>
+    <span id="new_param_id"> <%=id%> </span>
+    <div class="wrapper dashboard pb-5">
+      <div id="overlay" class="d-none">
+        <div class="overlay__inner">
+          <div class="overlay__content"><span class="spinner"></span></div>
+        </div>
+      </div>
+      <div class="d-flex">
+        <%- include('../partials/sidebar.ejs') %>
+        <div class="right-content" style="flex: 1">
+          <div class="btn_bar mb-3 hide-on-pc show-on-mobile">
+            <i class="fa-solid fa-bars fs-4"></i>
+          </div>
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="nav-addNews-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-addNews"
+                type="button"
+                role="tab"
+                aria-controls="nav-addNews"
+                aria-selected="true"
+              >
+                Thêm tin tức
+              </button>
+              <button
+                class="nav-link"
+                id="nav-editNews-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-profile"
+                type="button"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="false"
+              >
+                Sửa tin tức
+              </button>
+            </div>
+          </nav>
+          <div class="content">
+            <div class="content_product mt-4 tab-content" id="nav-tabContent">
+              <div class="row">
+                <div
+                  class="tab-pane fade show active"
+                  id="nav-addNews"
+                  role="tabpanel"
+                  aria-labelledby="nav-addNews-tab"
+                >
+                  <div class="col-lg-12">
+                    <form
+                      id="markdownFormNews"
+                      action=""
+                      class="position-relative"
+                    >
+                      <div
+                        onclick="handleCancelEdit()"
+                        div
+                        class="btn-close position-absolute d-none"
+                      ></div>
+                      <div class="form-group row">
+                        <div class="col-lg-6">
+                          <label class="form-label" for=""
+                            >Tiêu đề tiếng việt</label
+                          >
+                          <input
+                            class="form-control mb-3"
+                            type="text"
+                            name="title"
+                            id="title_news_vi"
+                            placeholder="title"
+                          />
+                        </div>
+                        <div class="col-lg-6">
+                          <label class="form-label" for=""
+                            >Tiêu đề tiếng anh</label
+                          >
+                          <input
+                            class="form-control mb-3"
+                            type="text"
+                            name="title"
+                            id="title_news_en"
+                            placeholder="title"
+                          />
+                        </div>
+                        <div class="col-lg-3">
+                          <label class="form-label" for="">Ngày đăng bài</label>
+                          <input
+                            class="form-control mb-3"
+                            type="date"
+                            name="datePost"
+                            id="datePost"
+                            placeholder="ngày đăng bài"
+                          />
+                        </div>
+                        <div class="col-lg-3">
+                          <label class="form-label" for=""
+                            >Mức độ nổi bật</label
+                          >
+                          <select
+                            name="importance"
+                            id="importance"
+                            class="form-select"
+                          >
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <!-- upload image -->
+                      <div class="row">
+                        <div class="col-lg-9">
+                          <div class="form-group d-flex row">
+                            <div class="col-lg-12">
+                              <label for="">Nội dung tiếng việt</label>
+                              <Textarea id="markdown_news_vi"></Textarea>
+                            </div>
+
+                            <div class="col-lg-12">
+                              <label for="">Nội dung tiếng anh</label>
+                              <Textarea id="markdown_news_en"></Textarea>
+                            </div>
+                          </div>
+                          <button
+                            class="addNews btn btn-primary float-end mt-3"
+                          >
+                            Thêm
+                          </button>
+                        </div>
+                        <div class="col-lg-3 pt-4">
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="container">
+                                  <label for="" class="mb-1">Ảnh bìa</label>
+                                  <div class="header position-relative">
+                                    <svg
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <g
+                                        id="SVGRepo_bgCarrier"
+                                        stroke-width="0"
+                                      ></g>
+                                      <g
+                                        id="SVGRepo_tracerCarrier"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      ></g>
+                                      <g id="SVGRepo_iconCarrier">
+                                        <path
+                                          d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15"
+                                          stroke="#000000"
+                                          stroke-width="1.5"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <p>Browse File to upload!</p>
+                                    <div
+                                      class="wp_preview_img_news border d-inline-block position-absolute w-100 h-100"
+                                    >
+                                      <a
+                                        class="d-block w-100 h-100"
+                                        href="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"
+                                        data-fancybox="gallery"
+                                      >
+                                        <img
+                                          data-lightbox="image-1"
+                                          data-title="My caption"
+                                          alt="default preview image product"
+                                          style="
+                                            width: 100% !important;
+                                            height: 100% !important;
+                                          "
+                                          id="preview_news"
+                                          src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"
+                                        />
+                                      </a>
+                                    </div>
+                                  </div>
+                                  <label for="image_news" class="footer">
+                                    <svg
+                                      fill="#000000"
+                                      viewBox="0 0 32 32"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <g
+                                        id="SVGRepo_bgCarrier"
+                                        stroke-width="0"
+                                      ></g>
+                                      <g
+                                        id="SVGRepo_tracerCarrier"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      ></g>
+                                      <g id="SVGRepo_iconCarrier">
+                                        <path
+                                          d="M15.331 6H8.5v20h15V14.154h-8.169z"
+                                        ></path>
+                                        <path
+                                          d="M18.153 6h-.009v5.342H23.5v-.002z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <p>Chọn ảnh</p>
+                                    <svg
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <g
+                                        id="SVGRepo_bgCarrier"
+                                        stroke-width="0"
+                                      ></g>
+                                      <g
+                                        id="SVGRepo_tracerCarrier"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      ></g>
+                                      <g id="SVGRepo_iconCarrier">
+                                        <path
+                                          d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21 16.1479 21H7.85206C6.80699 21 5.93811 20.1954 5.85795 19.1534L5.16565 10.1534Z"
+                                          stroke="#000000"
+                                          stroke-width="2"
+                                        ></path>
+                                        <path
+                                          d="M19.5 5H4.5"
+                                          stroke="#000000"
+                                          stroke-width="2"
+                                          stroke-linecap="round"
+                                        ></path>
+                                        <path
+                                          d="M10 3C10 2.44772 10.4477 2 11 2H13C13.5523 2 14 2.44772 14 3V5H10V3Z"
+                                          stroke="#000000"
+                                          stroke-width="2"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                  </label>
+                                  <input
+                                    id="image_news"
+                                    name="image"
+                                    type="file"
+                                    class="d-none"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-lg-12">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  style="display: none"
+                                >
+                                  <symbol
+                                    id="check-circle-fill"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    <path
+                                      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+                                    />
+                                  </symbol>
+                                  <symbol
+                                    id="info-fill"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    <path
+                                      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                                    />
+                                  </symbol>
+                                  <symbol
+                                    id="exclamation-triangle-fill"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    <path
+                                      d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                                    />
+                                  </symbol>
+                                </svg>
+
+                                <div
+                                  class="alert alert-warning d-flex align-items-center"
+                                  role="alert"
+                                >
+                                  <svg
+                                    class="bi flex-shrink-0 me-2"
+                                    width="24"
+                                    height="24"
+                                    role="img"
+                                    aria-label="Warning:"
+                                  >
+                                    <use
+                                      xlink:href="#exclamation-triangle-fill"
+                                    />
+                                  </svg>
+                                  <div>
+                                    Để hình ảnh hiện thị chất lượng cao nhất
+                                    phẩm không được quá 1000px, dung lượng không
+                                    quá 500kb
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group d-flex justify-content-end gap-2">
+                        <div
+                          onclick="handleEditNews()"
+                          class="editNews btn btn-warning d-none"
+                        >
+                          Cập nhật
+                        </div>
+                        <div
+                          onclick="handleCancelEdit()"
+                          class="cancelNews btn btn-danger d-none"
+                        >
+                          Hủy
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="nav-profile"
+                  role="tabpanel"
+                  aria-labelledby="nav-editNews-tab"
+                >
+                  <div class="col-lg-12">
+                    <div class="list-news">
+                      <table class="display" id="product_news">
+                        <thead>
+                          <tr>
+                            <th scope="col" class="text-center">STT</th>
+
+                            <th scope="col" class="text-center">
+                              tiêu đề Tiếng việt
+                            </th>
+                            <th scope="col" class="text-center">
+                              tiêu đề Tiếng Anh
+                            </th>
+                            <th scope="col" class="text-center">Ngày đăng</th>
+                            <th scope="col" class="text-center">Ảnh bìa</th>
+                            <th scope="col" class="text-center">Nổi bật</th>
+                            <th scope="col" class="text-center">Thao tác</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% news.forEach((item, index) => { %>
+
+                          <p id="imgNews<%=item.id%>" class="d-none">
+                            <%= item.img %>
+                          </p>
+                          <p id="contentNews<%=item.id%>_vi" class="d-none">
+                            <%= item.content_vi %>
+                          </p>
+                          <p id="contentNews<%=item.id%>_en" class="d-none">
+                            <%= item.content_en %>
+                          </p>
+                          <tr>
+                            <th scope="row"><%= index + 1 %></th>
+                            <td
+                              class="text-center"
+                              id="titleNews<%=item.id%>_vi"
+                            >
+                              <%= item.title_vi %>
+                            </td>
+                            <td
+                              class="text-center"
+                              id="titleNews<%=item.id%>_en"
+                            >
+                              <%= item.title_en %>
+                            </td>
+                            <td class="text-center" id="dateNews<%=item.id%>">
+                              <%= item.updatedAt %>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="<%= item.img %>"
+                                alt="thumb_news"
+                                width="50px"
+                                height="50px"
+                              />
+                            </td>
+                            <td class="text-center">
+                              <span
+                                class="d-none"
+                                id="importanceNews_<%=item.id%>"
+                              >
+                                <%=item.importance%>
+                              </span>
+                              <% if (item.importance > 0) { %>
+                              <span class="badge bg-success">Có</span>
+                              <% } else { %>
+                              <span class="badge bg-danger">Không</span>
+                              <% } %>
+                            </td>
+                            <td class="text-center">
+                              <a
+                                onclick="handleDelete('/admin/delete-new?id=<%= item.id %>','tin tức')"
+                                class="btn btn-sm btn-danger"
+                                >Xóa</a
+                              >
+                              <div
+                                id="btn_edit_news_<%= item.id %>"
+                                onclick="handleClickEditNew('<%= item.id %>')"
+                                class="btn btn-warning btn-sm"
+                              >
+                                Sửa
+                              </div>
+                              <span id="id_edit_news" class="d-none"></span>
+                            </td>
+                          </tr>
+                          <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <%- include('../partials/foot.ejs') %> <%-
+  include('../partials/scriptDashboard.ejs') %>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#product_news").DataTable();
+    });
+  </script>
+</html>

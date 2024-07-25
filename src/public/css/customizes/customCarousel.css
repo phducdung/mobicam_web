@@ -1,0 +1,113 @@
+
+
+
+.owl-item.active {
+  display: flex;
+  justify-content: center;
+}
+
+.owl-carousel .owl-nav button.owl-prev {
+  position: absolute;
+  cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--white-color);
+  border: none;
+  background: var(--primary-color);
+  width: 35px;
+  height: 35px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  left: -16px;
+  font-size: 1.2rem;
+  line-height: 1;
+  z-index: 2;
+  border-radius: 50%;
+  -webkit-transition: 0.4s linear;
+}
+
+.owl-carousel .owl-nav button.owl-next:hover {
+  background: #f8c022;
+}
+.owl-carousel .owl-nav button.owl-next.disabled{
+  display: none !important;
+}
+.owl-carousel .owl-nav button.owl-prev.disabled{
+  display: none !important;
+}
+.owl-carousel .owl-nav button.owl-prev:hover {
+  background: #f8c022;
+}
+.owl-carousel .owl-nav button.owl-next {
+  position: absolute;
+  cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--white-color);
+  border: none;
+  background: var(--primary-color);
+  width: 35px;
+  height: 35px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  right: -16px;
+  font-size: 1.2rem;
+  line-height: 1;
+  z-index: 2;
+  border-radius: 50%;
+  -webkit-transition: 0.4s linear;
+}
+
+
+/* slider bootrap */
+.carousel-control-prev,.carousel-control-next{
+  background: var(--primary-color);
+  height: 40px;
+  width: 40px;
+  margin: auto;
+  top: -54px;
+}
+.carousel-item .product-item{
+  text-align: center;
+}
+
+.carousel-item .product-item .product-desc{
+  text-align: left;
+}
+
+.owl-nav .owl-next span{
+  margin-top: -2px;
+  margin-left: 3px;
+}
+.owl-nav .owl-prev span{
+  margin-top: -2px;
+  margin-left: 0px;
+}
+
+.owl-carousel  span {
+  width:60px !important;
+  height:3px !important;
+  margin:5px 7px;
+  background: #0a6cff63;
+  display:block;
+
+
+}
+.owl-carousel .active span {
+  width:60px !important;
+  height:3px !important;
+  margin:5px 7px;
+  background: var(--primary-color) !important;
+  display:block;
+
+
+}
+
+.product-item .owl-carousel .owl-nav button.owl-prev{
+
+  left: -47px;
+  right: -47px;
+
+}

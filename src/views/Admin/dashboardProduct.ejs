@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dashboard admin</title>
+
+    <%- include('../partials/head.ejs') %>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"
+    ></script>
+  </head>
+  <style></style>
+  <body>
+    <span class="d-none" id="product_param_id"><%=id %></span>
+    <div class="wrapper dashboard pb-5">
+      <div id="overlay" class="d-none">
+        <div class="overlay__inner">
+          <div class="overlay__content"><span class="spinner"></span></div>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <%- include('../partials/sidebar.ejs') %>
+        <div class="right-content" style="flex: 1">
+          <div class="btn_bar mb-3 hide-on-pc show-on-mobile">
+            <i class="fa-solid fa-bars fs-4"></i>
+          </div>
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="nav-addProduct-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-addProduct"
+                type="button"
+                role="tab"
+                aria-controls="nav-addProduct"
+                aria-selected="true"
+              >
+                Thêm sản phẩm
+              </button>
+              <button
+                class="nav-link"
+                id="nav-editProduct-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-editProduct"
+                type="button"
+                role="tab"
+                aria-controls="nav-editProduct"
+                aria-selected="false"
+              >
+                Sửa sản phẩm
+              </button>
+            </div>
+          </nav>
+          <div class="content">
+            <div class="content_product mt-4 tab-content" id="nav-tabContent">
+              <div class="row">
+                <div
+                  class="tab-pane fade show active product_main_content"
+                  id="nav-addProduct"
+                  role="tabpanel"
+                  aria-labelledby="nav-addProduct-tab"
+                >
+                  <div class="col-lg-12">
+                    <form
+                      action=""
+                      id="markdownFormProduct"
+                      class="position-relative"
+                    >
+                      <div
+                        onclick="handleCancelEditProduct()"
+                        class="btn-close position-absolute"
+                      ></div>
+                      <div class="form-goup">
+                        <label for="">Danh mục</label>
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                          id="category_product"
+                          name="category_product"
+                        >
+                          <% cats.forEach((item, index) => { %>
+                          <option value="<%= item.id %>">
+                            <%= item.name_vi %>
+                          </option>
+                          <% }) %>
+                        </select>
+                      </div>
+                      <div class="form-group row mt-4">
+                        <div class="col-lg-6">
+                          <label class="form-label" for=""
+                            >Tên sản phẩm tiếng việt</label
+                          >
+                          <input
+                            class="form-control mb-3"
+                            type="text"
+                            name="title"
+                            id="name_product_vi"
+                          />
+                        </div>
+                        <div class="col-lg-6">
+                          <label class="form-label" for=""
+                            >Tên sản phẩm tiếng anh</label
+                          >
+                          <input
+                            class="form-control mb-3"
+                            type="text"
+                            name="title"
+                            id="name_product_en"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <input
+                              id="fileInput"
+                              type="file"
+                              class="filepond"
+                              name="filepond"
+                              multiple
+                              data-allow-reorder="true"
+                              data-max-file-size="500kb"
+                              data-max-files="5"
+                            />
+                          </div>
+                          <div class="col-md-6">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              style="display: none"
+                            >
+                              <symbol
+                                id="check-circle-fill"
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                              >
+                                <path
+                                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+                                />
+                              </symbol>
+                              <symbol
+                                id="info-fill"
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                              >
+                                <path
+                                  d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                                />
+                              </symbol>
+                              <symbol
+                                id="exclamation-triangle-fill"
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                              >
+                                <path
+                                  d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                                />
+                              </symbol>
+                            </svg>
+
+                            <div
+                              class="alert alert-warning d-flex align-items-center"
+                              role="alert"
+                            >
+                              <svg
+                                class="bi flex-shrink-0 me-2"
+                                width="24"
+                                height="24"
+                                role="img"
+                                aria-label="Warning:"
+                              >
+                                <use xlink:href="#exclamation-triangle-fill" />
+                              </svg>
+                              <div>
+                                để hình ảnh hiện thị chất lượng cao nhất phẩm
+                                không được quá 1000px, dung lượng không quá
+                                500kb
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group d-flex row">
+                        <div class="col-lg-6">
+                          <label for="">Nội dung tiếng việt</label>
+                          <Textarea id="markdown_product_vi"></Textarea>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <label for="">Nội dung tiếng anh</label>
+                          <Textarea id="markdown_product_en"></Textarea>
+                        </div>
+                      </div>
+                      <button class="addProduct btn btn-primary mt-4 float-end">
+                        Thêm
+                      </button>
+                      <div class="form-group float-end">
+                        <div
+                          onclick="handleEditProduct()"
+                          class="editProduct btn btn-warning d-none mt-4"
+                        >
+                          Cập nhật
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="nav-editProduct"
+                  role="tabpanel"
+                  aria-labelledby="nav-editProduct-tab"
+                >
+                  <div class="col-lg-12">
+                    <table class="display" id="product_table">
+                      <thead>
+                        <tr>
+                          <th class="text-center">STT</th>
+                          <th class="text-center">ID</th>
+                          <th class="text-center">Tên Tiếng Việt</th>
+                          <th class="text-center">Tên Tiếng Anh</th>
+                          <th class="text-center">Hình ảnh</th>
+                          <th class="">Mã Danh Mục</th>
+                          <th class="text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% %> <% products.forEach((item, index) => { %>
+
+                        <p id="imgProduct<%=item.id%>" class="d-none"></p>
+                        <p id="contentProduct<%=item.id%>_vi" class="d-none">
+                          <%= item.productdesc_vi %>
+                        </p>
+                        <p id="contentProduct<%=item.id%>_en" class="d-none">
+                          <%= item.productdesc_en %>
+                        </p>
+                        <tr>
+                          <th scope="row"><%= index + 1 %></th>
+                          <td class="text-center"><%= item.id %></td>
+                          <td
+                            class="text-center"
+                            id="nameProduct_vi<%=item.id%>"
+                          >
+                            <%= item.productname_vi %>
+                          </td>
+                          <td
+                            class="text-center"
+                            id="nameProduct_en<%=item.id%>"
+                          >
+                            <%= item.productname_en %>
+                          </td>
+                          <td class="text-center">
+                            <img
+                              src="<%= item.images[0]%>"
+                              alt="thumb_product"
+                              width="50px"
+                              height="50px"
+                            />
+                            <% item.images.forEach((img, index) => { %><img
+                              src="<%= img %>"
+                              alt="thumb_product"
+                              width="50px"
+                              height="50px"
+                              class="d-none sub_thumb_product_<%=item.id %>"
+                            />
+                            <% }) %>
+                          </td>
+                          <td class="text-center" id="catProduct<%=item.id%>">
+                            <%= item.catid %>
+                          </td>
+                          <td class="text-center">
+                            <a
+                              onclick="handleDelete('/admin/delete-product?id=<%= item.id %>','sản phẩm')"
+                              class="btn btn-sm btn-danger"
+                              >Xóa</a
+                            >
+                            <button
+                              id="btn_edit_product_<%= item.id %>"
+                              onclick="handleClickEditProduct('<%= item.id %>')"
+                              class="btn btn-warning btn-sm"
+                            >
+                              Sửa
+                            </button>
+                            <span id="id_edit_product" class="d-none"></span>
+                          </td>
+                        </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .filepond--root {
+        border: 2px dashed #4caf50; /* Viền dashed màu xanh lá cây */
+        background-color: #f0f4f8; /* Màu nền */
+        border-radius: 12px; /* Bo góc */
+        padding: 20px; /* Khoảng cách bên trong */
+        box-sizing: border-box; /* Đảm bảo padding không làm thay đổi kích thước của vùng chọn */
+
+        height: 350px; /* Chiều cao cố định */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap; /* Cho phép các mục ảnh bao quanh */
+      }
+      .filepond--item {
+        width: 200px !important; /* Cố định chiều rộng */
+        height: 200px !important; /* Cố định chiều cao để tạo hình vuông */
+        object-fit: cover; /* Đảm bảo ảnh phủ kín khu vực mà không làm mất tỉ lệ */
+      }
+
+      .filepond--image-preview-wrapper {
+        width: 100% !important;
+        height: 100% !important; /* Cho phép ảnh chiếm toàn bộ khu vực xem trước */
+      }
+
+      .filepond--image-preview {
+        object-fit: cover; /* Đảm bảo ảnh phủ kín mà không làm mất tỉ lệ */
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 60px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <img id="modalImage" src="" alt="Image Preview" style="width: 100%" />
+      </div>
+    </div>
+  </body>
+  <%- include('../partials/foot.ejs') %> <%-
+  include('../partials/scriptDashboard.ejs') %>
+
+  <script src="/js/sidebar.js"></script>
+  <script>
+    var table = $("#product_table").DataTable();
+
+    // Lấy tất cả dữ liệu hàng
+    var allData = table.rows().data().toArray();
+    console.log(allData);
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+  <script>
+    // Đăng ký plugin
+    FilePond.registerPlugin(
+      FilePondPluginFileEncode,
+      FilePondPluginFileValidateSize,
+      FilePondPluginImageExifOrientation,
+      FilePondPluginImagePreview
+    );
+    // Khởi tạo FilePond trên tất cả phần tử <input> có class='filepond'
+    const pond = FilePond.create(document.querySelector(".filepond"), {
+      // Tính năng kéo và thả: Kéo một thư mục vào
+      dropOnPage: true,
+      dropOnElement: false,
+      // Cho phép sắp xếp lại hình ảnh được upload
+      allowReorder: true,
+      // Xác định giới hạn file tối đa
+      maxFiles: 5,
+      onprocessfile: (file) => {
+        const allowedTypes = ["image/jpeg", "image/png"]; // Danh sách loại file cho phép
+
+        if (!allowedTypes.includes(file.type)) {
+          // Loại file không hợp lệ
+          file.status = "invalid"; // Thay đổi trạng thái file
+          file.error = "Chỉ cho phép tải ảnh!"; // Thêm thông báo lỗi
+        }
+      },
+      labelIdle:
+        'Kéo & thả ảnh của bạn hoặc <span class="filepond--label-action">Chọn Ảnh</span>',
+    });
+
+  </script>
+
+  <script src="/js/dashboard.js"></script>
+</html>

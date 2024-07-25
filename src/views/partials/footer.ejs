@@ -1,0 +1,146 @@
+                                                          <footer class="footer_wrappper pt-5 pb-5" style="background: #111a3b">
+  <% var field=`name_${lang}`; %>
+    <% if (false) { %> <%- footerSection %>
+        <% } else { %>
+          <section id="footer" class="container position-relative">
+            <div class="row footer_container">
+              <div class=" contact_footer col-lg-4 col-md-3 col-sm-7 col-xs-12 mb-3">
+                <div class="footer_item">
+                  <h5 class="footer-title text-light mb-2">
+                    <% if (lang=='vi' ) { %> Liên hệ <% } else { %> Contact <% } %>
+                  </h5>
+                  <ul class="footer-list">
+                    <li class="footer-item footer-address mb-2">
+                      <i class="fa-solid fa-phone footer-icon text-light"></i>
+                      <span class="address-text text-light">
+                        Hotline: 0899.19.19.19</span>
+                    </li>
+
+                    <li class="footer-item footer-address mb-2">
+                      <i class="fa-solid fa-envelope footer-icon text-light"></i>
+                      <span class="address-text text-light">
+                        Email: mobicam8@gmail.com</span>
+                    </li>
+
+                    <li class="footer-item footer-address mb-2">
+                      <a target="_blank"
+                        href="https://www.google.com/maps/place/TRUNG+T%C3%82M+D%E1%BB%8CH+V%E1%BB%A4+KH%C3%81CH+H%C3%80NG+MID+VI%E1%BB%86T+NAM/@10.8641493,106.738995...6.738995"
+                        class="footer-item-link text-decoration-none text-light">
+                        <i class="fa-solid fa-location-dot footer-icon text-light"></i>
+                        <p class="address-text text-light d-inline">
+                          <% if (lang=='vi' ) { %>     45 đường số 5, KDC Thăng Long Home <% } else { %> 
+                            45 Street No. 5, Thang Long Home Residential Area, Tam Phu, Thu Duc City
+                            <% } %>
+                      
+                          <p class="address-text text-light"> 
+                            <% if (lang=='vi' ) { %> P. Tam Phú, TP. Thủ Đức <% } else { %> 
+                            
+                            Thu Duc City, Ho Chi Minh City
+                              <% } %>
+                          </p>
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="footer_follow-wrapper mobile_hidden">
+                    <h5 class="footer-title text-light mb-2">
+                      <% if (lang=='vi' ) { %> Kết nối với chúng tôi <% } else { %> Connect with us <% } %>
+                    </h5>
+                    <ul class="footer_follow-list d-flex gap-3">
+                          <% if(footerIcon) { %>
+                            <%-footerIcon%>
+                          <% } else { %>
+                            <li class="footer_follow-item position-relative"> 
+                              <a href="https://www.facebook.com/mobicam.vn" class="footer_follow-link img_wp ">
+                                <img src="https://mobicam.vn/assets/images/mobiCamLogoCircle.png" alt="facebook"
+                                  class="footer_follow-img" />
+                             
+                              </a>
+                              <input 
+                              style=" left: -263px; width: 259px;"
+                              placeholder="link facebook"
+                              type="url" name="" id="url_input_change_facbook" class="form-control position-absolute  top-0 d-none  ">
+                            </li>
+                            <li class="footer_follow-item position-relative">
+                              <a href="https://zalo.me/3584014033005677673" class="footer_follow-link img_wp">
+                                <img src="https://mobicam.vn/assets/images/zalo.png" alt="zalo" class="footer_follow-img" />
+                              </a>
+                              <input 
+                              style="bottom: -52px;width: 259px;left: -93px;"
+                              placeholder="link zalo"
+                              type="url" name="" id="url_input_change_zalo" class="form-control position-absolute  d-none  ">
+                            </li>
+                            <li class="footer_follow-item position-relative">
+                              <a href="tel:0899191919" class="footer_follow-link img_wp ">
+                                <img src="https://mobicam.vn/assets/images/phonecontact.png" alt="phone"
+                                  class="footer_follow-img" />
+                
+                              </a>
+                              <input 
+                              style="bottom:-1px;width: 257px;left: 44px;"
+                              placeholder="số điện thoại"
+                              type="url" name="" id="url_input_change_phone" class="form-control position-absolute d-none   ">
+                            </li>
+                          <% } %>
+                          
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class=" polyfy_footer col-lg-3 col-md-3 col-sm-7 col-xs-12">
+                <div class="footer_item">
+                  <h5 class="footer-title text-light mb-2">
+                    <% if (lang=='vi' ) { %> Chính sách <% } else { %> Polycies <% } %>
+                  </h5>
+                  <ul class="footer-list">
+                    <% listPolicy.forEach(function(policy){ %>
+                      <li class="footer-item">
+                        <a href="/policy/<%= policy.id %>/<%=lang%>" class="footer-link">
+                          <%= policy[field] %>
+                        </a>
+                      </li>
+                      <% }) %>
+                  </ul>
+                </div>
+              </div>
+
+              <div class=" qa_footer col-lg-3 col-md-3 col-sm-5 col-xs-12">
+                <div class="footer_item">
+                  <h5 class="footer-title text-light mb-2">
+                    <% if (lang=='vi' ) { %> Hỏi đáp <% } else { %> Q&A <% } %>
+                  </h5>
+                  <ul class="footer-list">
+                    <% listQA.forEach(function(qa){ %>
+                      <li class="footer-item">
+                        <a href="/q&a/<%= qa.id %>/<%=lang%>" class="footer-link">
+                          <%= qa[field] %>
+                        </a>
+                      </li>
+                      <% }) %>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="colab_footer col-lg-2 col-md-3 col-sm-5 col-xs-12">
+                <div class="footer_item">
+                  <h5 class="footer-title text-light mb-2">
+                    <% if (lang=='vi' ) { %> Hợp tác <% } else { %> Partner <% } %>
+                  </h5>
+                  <ul class="footer-list">
+                    <% listCoop.forEach(function(coop){ %>
+
+                      <li class="footer-item">
+                        <a href="/cooperate/<%= coop.id %>/<%=lang%>" class="footer-link">
+                          <%= coop[field] %>
+                        </a>
+                      </li>
+
+                      <% }) %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+          <% } %>
+</footer>

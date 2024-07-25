@@ -1,0 +1,133 @@
+
+
+.wrapper_edit_landing #save_edit{
+  display: flex !important;
+}
+.wrapper_edit_landing  .change_image_area{
+  display: block;
+}
+.wrapper_edit_landing footer input {
+  display: block !important;
+}
+.wrapper_edit_landing footer .change_image_area label
+{
+display: none;
+}
+.wrapper_edit_landing  #btn_upload_file_hero
+{
+  display: flex !important;
+
+}
+
+.wrapper_edit_landing  #btn_upload_reason_video
+{
+  display: block !important;
+
+}
+.wrapper_edit_landing #url_input_change_location{
+  display: block !important;
+}
+
+.wrapper_edit_landing .img_wp{
+  position: relative;
+}
+
+.wrapper_edit_landing .change_image_area {
+  gap: 15px;
+  border: 2px dashed #0d22d7;
+  background: #eee;
+
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 0;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  font-size: 4rem;
+  justify-content: center;
+  align-items: center;
+  color: rgb(33, 32, 32);
+
+  opacity: 0.98;
+  cursor: pointer;
+  display: none;
+  z-index: 999;
+}
+.wrapper_edit_landing .img_wp:hover .change_image_area {
+  display: flex;
+}
+.wrapper_edit_landing .set-image-item.plus-image-item {
+  border: 1px dashed var(--main-bg-bl4);
+}
+
+.wrapper_edit_landing .set-image-item {
+  border: 1px solid var(--main-bg-bl4);
+  transition: color 0.3s ease, border-color 0.3s ease;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  width: 94%;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  flex-direction: column;
+  border: 1px solid;
+  color: white;
+  background: gray;
+  height: 100%;
+  opacity: 0.9;
+}
+#btn_upload_reason_video:hover {
+  transition: all 0.3s ease;
+  color: white;
+  background-color: var(--primary-color);
+}
+
+.finger-pointer {
+  position: relative;
+}
+
+.finger-pointer::after {
+  content: "";
+  position: absolute;
+  top: -50px; /* Điều chỉnh vị trí thích hợp dựa trên kích thước của ảnh */
+  left: 20px; /* Điều chỉnh để phù hợp */ 
+  width: 40px; /* Kích thước của ảnh ngón tay của bạn */
+  height: 40px; /* Kích thước của ảnh ngón tay của bạn */
+  background-image: url('https://png.pngtree.com/png-clipart/20221228/ourmid/pngtree-3d-rendering-of-pointing-hand-gesture-png-image_6540596.png'); /* Đường dẫn đến ảnh của bạn */
+  background-size: cover;
+  pointer-events: none; /* Đảm bảo nó không ảnh hưởng đến các sự kiện chuột */
+}
+
+
+[contenteditable="true"] {
+
+  
+
+  border-radius: 4px;
+ 
+}
+
+[contenteditable="true"]:focus {
+  border: 1px solid var(--primary-color);
+  outline: 0;
+  box-shadow: 0 0 8px rgba(3, 24, 41, 0.6);
+}
+ 
+ .wrapper_edit_landing .alert {
+  position: fixed ;
+  z-index: 9999999;
+  left: 0;
+  width: 250px;
+  top: 35%;
+
+}

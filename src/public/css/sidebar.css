@@ -1,0 +1,126 @@
+.side-bar-left {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  height: 100vh;
+  width: var(--sidebar-width);
+  background-color: var(--main-bg);
+  position: relative;
+  top: 0;
+  left: 0;
+  border-right: 1px solid var(--main-border-color);
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
+  transition: all 0.3s ease;
+}
+.side-bar-left h6 {
+  height: var(--header-height);
+  display: flex;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  color: var(--white);
+  align-items: center;
+  justify-content: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: var(--main-bg-bl4);
+}
+.side-bar-left a{
+  color: white;
+  text-decoration: none;
+  display: block;
+  flex: 1;
+}
+.side-bar-left .main-menu {
+  display: flex;
+  padding: 7px 0;
+  position: relative;
+  width: 100%;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 400;
+  color: var(--white);
+  gap: 10px;
+  padding: 5px 10px;
+  padding-bottom: 7px;
+}
+.side-bar-left .sub-menu-item.active {
+background: #606060;;
+}
+.side-bar-left .main-menu.active{
+  
+}
+.side-bar-left .main-menu:hover {
+  background-color: var(--main-bg-bl4);
+}
+.side-bar-left nav {
+  padding: 20px 10px;
+}
+.side-bar-left .main-menu span {
+  font-weight: 300;
+  font-size: 1.05em;
+}
+.side-bar-left .menu-item.active .main-menu {
+  background: white !important;
+  color: var(--main-bg);
+}
+.side-bar-left .menu-item.active .icon_chevon {
+  color: black;
+}
+
+.side-bar-left .menu-item .icon_chevon {
+  right: 8px;
+  right: 10px;
+  top: 10px;
+}
+.side-bar-left .sub_menu_item {
+  display: flex;
+  color: var(--white);
+  padding: 7px 10px;
+}
+
+.side-bar-left .sub-menu {
+  background-color: var(--white-l1);
+
+  overflow: hidden;
+}
+.side-bar-left .sub-menu .sub-menu-item {
+  padding: 7px 15px;
+  padding-left: 20px;
+  font-size: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+.side-bar-left .sub-menu .sub-menu-item:hover {
+  transition: background-color 0.3s ease;
+  background-color: var(--white-l2);
+}
+aside {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space; */
+}
+.logout_btn {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  padding: 7px 0;
+  flex-direction: row;
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  cursor: pointer;
+  left: 15px;
+  background-color: var(--main-bg-bl4);
+}
+#main-content{
+    flex: 1;
+}
+.side-bar-left.active{
+  transform: translateX(0px);
+}

@@ -1,0 +1,127 @@
+@import url("./customizes/customizeBootrap.css");
+@import url("./reset.css");
+@import url("./global.css");
+@import url("home.css");
+@import url("./customizes/customCarousel.css");
+@import url("./customizes/customTab.css");
+@import url("sub_page_new.css");
+@import url("sidebar.css");
+@import url("dashboard.css");
+@import url("editHome.css");
+@import url("./customizes/customizeFancibox.css");
+@import url("./customizes/customMarkdown.css");
+@import url("responsive.css");
+:root {
+  --primary-color: #0c5adb;
+  --font: "Roboto", sans-serif;
+  --pink-color: rgb(247, 44, 93);
+  --red-color: rgb(237, 44, 65);
+  --white-color: #fff;
+  --black-color: #000;
+  --text-color: #616161;
+  --brown-color: #513d42;
+  --gray-color: rgb(237, 237, 237);
+  --blue-color: rgb(30, 111, 249);
+  --blue-black-color: #6d747c;
+  --blueP-color: #1a78a8;
+  --blueB-color: #9adbfc;
+  --greenP-color: rgb(0, 99, 97);
+  --greenB-color: rgb(173, 224, 216);
+  --purpleP-color: rgb(95, 39, 129);
+  --purpleB-color: #cdb7e7;
+  --yellow-color: #fcd25c;
+  --footer-color: #151b2b;
+  --packet-item1: #0c8649;
+  --packet-item2: #ce1800;
+  --packet-item3: #e46a22;
+  --height-policy: 154px;
+  --height-price: 40px;
+  --height-about: 146px;
+  --height-imgA: 325px;
+  --transparent-color: rgba(3, 17, 39, 0.83);
+  --width-logo: 182px;
+  --width-dot-slide: 64px;
+  --height-header: 78px;
+  --height-benifit-icon: 83px;
+  --mg-title: 60px;
+  --primary-color2: #eff2f7;
+  --transition-smooth: 0.5s cubic-bezier(0.04, 1, 0.6, 0.97);
+  --box-shadow: 0 18px 17px 0 rgb(0 0 0 / 10%);
+  --padding-section: 44px 0 48px;
+  --letter_s: 2px;
+  --neon-text-color: #333;
+  --neon-border-color: #0c5adb;
+  --height-produce: 202px;
+
+  --sidebar-width: 240px;
+  --header-height: 50px;
+  --product-infor-width: 250px;
+  --main-border-color: rgba(255, 255, 255, 0.233);
+  --border-color-layout: #414e6618;
+  --border-color-layout-l2: #b7b7b7;
+  --main-shadow: 0 1px 4px 0 #0002;
+  --td-main-border-color: #e5e5e5;
+  --shadow-action: 0 -1px 3px 0 rgb(0 0 0 / 12%);
+  --main-text: #303c54;
+  --main-text-l3: #636f87;
+  --active: #355bfc;
+  --white-l1: #ffffff18;
+  --white-l2: #ffffff2f;
+  --white-l3: #ffffff6b;
+  --main-bg: #414e66;
+  --main-bg-bl0: #58657e9c;
+  --main-bg-bl1: #58657e;
+  --main-bg-bl3: #303c54a8;
+  --main-bg-bl4: #303c5465;
+  --main-bg-bl5: #414e662b;
+  /* --background: #f4f6fa; */
+  --background: #f6f6f6;
+  --white: #ffffff;
+  --orange: #ee4d2d;
+  --orange-l0: #ee4d2d36;
+  --orange-l1: #ee4d2db5;
+  --orange-hover: #e54a2b;
+  --black: #000000;
+  --black-l1: #f6f6f6;
+  --black-l2: #ededed;
+  --blue-l1: #e5eefb;
+  --blue: #2673dd;
+  --blue-l2: #2672dd8a;
+  --blue-hover: #1f6ad2;
+  --green: #04aa6d;
+  --green-l1: #04aa6d8c;
+  --green-hover: #05925e;
+  /* --main-bg: #523513; */
+  --BA20: rgba(0, 0, 0, 0.2);
+  --BA5: rgba(0, 0, 0, 0.05);
+  --BA10: rgba(0, 0, 0, 0.15);
+  --BA50: rgba(0, 0, 0, 0.5);
+  --NG60: #394e60;
+  --B60: #0068ff;
+  --N30: #e5e7eb;
+  --N50: #e1e4ea;
+  --main-bg: #323639;
+  --main-text-l3: #28314f;
+  --main-bg-bl1: #000000c3;
+  --main-bg-bl4: #5e5e5e65;
+  --background: #ffffff;
+}
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  line-height: 1.5;
+}
+
+::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px var(--primary-color); */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--yellow-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}

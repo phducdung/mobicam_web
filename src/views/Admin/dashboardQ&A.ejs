@@ -1,0 +1,363 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dashboard admin</title>
+    <%- include('../partials/head.ejs') %>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css"
+    />
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"
+    ></script>
+    <style>
+      :root {
+        --text-color: #212529;
+        --bg-hover: #f1f1f1;
+        --border-color: #e0e0e0;
+        --box-shadow-color: rgba(0, 0, 0, 0.1);
+        --td-main-border-color: #e5e5e5;
+      }
+
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        height: 100%;
+      }
+
+      .root {
+        display: flex;
+        background-color: var(--bg-hover);
+        height: 100%;
+      }
+
+      .main {
+        display: flex;
+        flex-direction: column;
+        margin-left: 240px;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: white;
+        font-weight: bold;
+        height: 50px;
+      }
+
+      .main-header .left-header {
+        margin-left: 10px;
+      }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .main-content-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        height: 50px;
+        padding: 10px;
+        margin-top: 10px;
+        box-shadow: 0 2px 10px var(--box-shadow-color);
+      }
+
+      .main-content-top span {
+        font-weight: bold;
+        font-size: 15px;
+        padding: 10px;
+        color: #0d6efd;
+      }
+
+      .main-content-bottom {
+        display: flex;
+        padding: 10px;
+        flex: 1;
+      }
+
+      .qa-list {
+        width: 250px;
+        padding: 10px;
+        overflow: auto;
+        background-color: white;
+        margin-right: 10px;
+        border-radius: 7px;
+        height: 100%;
+        box-shadow: 0 2px 10px var(--box-shadow-color);
+      }
+
+      .qa-wrapper {
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        border-radius: 7px;
+        box-shadow: 0 2px 10px var(--box-shadow-color);
+      }
+
+      .abc {
+        margin-bottom: 5px;
+      }
+
+      .abc input,
+      .abc textarea {
+        padding: 5px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      .qa-item {
+        padding: 7px;
+        border-bottom: 1px solid var(--border-color);
+        cursor: pointer;
+      }
+
+      .qa-item:hover {
+        background-color: var(--bg-hover);
+      }
+
+      .qa-name {
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .nav-tabs {
+        margin-bottom: 10px;
+      }
+
+      .btn-css {
+        cursor: pointer;
+        border-color: #0d6efd;
+        padding: 5px 10px;
+        border-radius: 4px;
+        background-color: white;
+        color: #0d6efd;
+      }
+
+      .hover-btn:hover {
+        background-color: #0d6efd;
+        color: white;
+        transition: linear 0.3s;
+      }
+      .absolute-content-QA {
+        position: fixed;
+        z-index: 999999;
+        top: 0;
+        width: 82vw;
+      }
+      .root .btn-close {
+        display: block !important;
+      }
+      .selected{
+        background: #e5e5e5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="root">
+      <div
+        class="modal fade modal-add-qa"
+        id="modal-add-qa"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Thêm hỏi đáp</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Hủy
+              </button>
+              <button type="button" class="btn btn-primary add-qa-btn">
+                Thêm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar"><%- include('../partials/sidebar.ejs') %></div>
+      <div id="overlay" class="d-none">
+        <div class="overlay__inner">
+          <div class="overlay__content"><span class="spinner"></span></div>
+        </div>
+      </div>
+      <div class="main">
+        <div class="main-header">
+          <div class="left-header">
+            <span>Trang / Hỏi đáp</span>
+          </div>
+          <div class="right-header">
+            <i class="fa-sharp fa-solid fa-rotate"></i>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="main-content-top">
+            <div class="main-content-top-left">
+              <span>Danh sách hiện có</span>
+            </div>
+            <div class="main-content-top-right">
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#modal-add-qa"
+                class="save-qa-btn hover-btn btn-css"
+              >
+                + Thêm mới
+              </button>
+              <button class="delete-qa-btn hover-btn btn-css">Xóa</button>
+              <button class="update-qa-btn hover-btn btn-css">Cập nhật</button>
+            </div>
+          </div>
+          <div class="main-content-bottom">
+            <div class="qa-list">
+              <% listQA.forEach(function(QAItem) { %>
+              <div id="vi_<%= QAItem.id %>" class="qa-item">
+                <div class="qa-name"><%= QAItem.name_vi %></div>
+              </div>
+              <div id="en_<%= QAItem.id %>" class="qa-item d-none">
+                <div class="qa-name"><%= QAItem.name_en %></div>
+              </div>
+              <% }) %>
+            </div>
+            <div class="qa-wrapper">
+              <nav>
+                <div
+                  class="nav nav-tabs d-flex align-items-center"
+                  id="nav-tab"
+                  role="tablist"
+                >
+                  <button
+                    class="nav-link active"
+                    id="nav-home-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-home"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-home"
+                    aria-selected="true"
+                  >
+                    Việt Ngữ
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-profile"
+                    aria-selected="false"
+                  >
+                    Anh Ngữ
+                  </button>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div
+                  class="tab-pane fade show active tab-content-vi"
+                  id="nav-home"
+                  role="tabpanel"
+                  aria-labelledby="nav-home-tab"
+                >
+                  <div class="abc mb-3 mt-3">
+                    <label for="qa-name-vi"> Tên: </label>
+                    <input
+                      disabled
+                      type="text"
+                      name="qa-name-vi"
+                      id="qa-name-vi"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="abc mb-3">
+                    <label for="qa-name-vi"> Câu hỏi: </label>
+                    <select
+                      name=""
+                      id="select-qa-vi"
+                      class="form-control"
+                    ></select>
+                  </div>
+                  <div class="abc">
+                    <label for="qa-content-vi"> Câu trả lời: </label>
+                    <textarea
+                      name="qa-content-vi"
+                      id="qa-content-vi"
+                    ></textarea>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade tab-content-en"
+                  id="nav-profile"
+                  role="tabpanel"
+                  aria-labelledby="nav-profile-tab"
+                >
+                  <div class="abc mb-3 mt-3">
+                    <label for="qa-name-en"> Tên: </label>
+                    <input
+                      disabled
+                      type="text"
+                      name="qa-name-en"
+                      id="qa-name-en"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="abc mb-3">
+                    <label for="qa-question-en"> Câu hỏi: </label>
+                     <select name="" id="select-qa-en" class="form-control">
+
+                     </select>
+                  </div>
+                  <div class="abc">
+                    <label for="qa-content-en"> Câu trả lời: </label>
+                    <textarea
+                      name="qa-content-en"
+                      id="qa-content-en"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <%- include('../partials/foot.ejs') %> <%-
+  include('../partials/scriptDashboard.ejs') %>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/qa.js"></script>
+</html>

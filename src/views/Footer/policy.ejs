@@ -1,0 +1,149 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera giám sát hành trình MobiCAM</title>
+  <%- include('../partials/head.ejs') %>
+    <style>
+      .footer_follow-item .change_image_area{
+        display: none;
+      }
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #eff2f7;
+      }
+
+      .root {
+        margin-top: 120px;
+        min-height: 100vh;
+        padding-top: 50px;
+      }
+
+      section {
+        position: relative;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      .head h3 {
+        color: #ff5e5e;
+        font-size: 30px;
+        margin-bottom: 50px;
+        font-weight: 700;
+      }
+
+      .policy-body {
+        display: flex;
+      }
+  
+      .list-policy {
+        padding: 0 20px 20px 0;
+      }
+
+      .policy-item {
+        margin-bottom: 10px;
+        cursor: pointer;
+        padding: 8px 10px;
+        border-radius: 4px;
+        min-width: 260px;
+        color: #333;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        /* Độ trễ và hiệu ứng màu nền */
+      }
+
+      .policy-name {
+        align-items: center;
+        color: #333;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .policy-item.selected {
+        background-color: #d3d3d3;
+        /* Màu nền khi được chọn */
+      }
+
+      .policy-item:hover,
+      .policy-item:active {
+        background-color: #d3d3d3;
+      }
+
+      .content-policy {
+        flex: 1;
+
+
+        margin-bottom: 50px;
+        border-radius: 8px;
+
+        overflow: auto;
+      }
+
+      .content-policy-details {
+        text-align: justify;
+        font-size: 16px;
+        line-height: 1.6;
+        background: white;
+        padding: 20px 30px;
+      }
+    </style>
+</head>
+
+<body>
+  <div class="app">
+    <span id="policy-id" class="d-none">
+      <%=id%>
+    </span>
+    <span id="qa-lang">
+      <%=lang%>
+    </span>
+    <span id="policy-lang" class="d-none">
+      <%=lang%>
+    </span>
+    <%- include('../partials/header.ejs') ,{headerSection} %>
+      <div class="root container policy">
+        <section>
+          <div class="head">
+            <h3>
+              <%=lang === 'vi' ? 'Chính sách' : 'Policy'%>
+              </h3>
+          </div>
+          <div class="policy-body row">
+            <div class="list-policy col-lg-4 col-sm-12">
+              <% listPolicy.forEach(function(policyItem){ %>
+                <div class="policy-item hide-on-mobile" id="<%= policyItem.id %>"
+                  onclick="SelectPolicy('<%= policyItem.id %>')">
+                  <div class="policy-name">
+                    <% const field=`name_${lang}`; %>
+                      <%= policyItem[field] %>
+                  </div>
+                </div>
+                <% }) %>
+                  <select class="hide-on-pc show-on-mobile form-select" name="" id="optTap_policy">
+                    <% listPolicy.forEach(function(policyItem){ %>
+                      <option value="<%= policyItem.id %>">
+                        <% const field=`name_${lang}`; %>
+                          <%= policyItem[field] %>
+                      </option>
+                      <% }) %>
+                  </select>
+            </div>
+            <div class="content-policy col-lg-8 col-sm-12">
+              <!-- dữ liệu dc api đổ vào đây -->
+              <div class="content-policy-details"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <%- include('../partials/footer.ejs'),{footerSection:""} %>
+  </div>
+  <script src="https://my.mobicam.vn/static/js/chatplugin.js?v=0.12"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/ejsPolicy.js"></script>
+
+</body>
+
+</html>

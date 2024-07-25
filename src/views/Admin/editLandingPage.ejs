@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="zalo-platform-site-verification"
+      content="PSEX9fhSSpzBzzaJhU9q3t7J_ZITeonYCZ0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1"
+    />
+    <meta property="og:type" content="mobicam" />
+    <meta property="og:title" content="MOBICAM - Camera giám sát hành trình" />
+    <meta
+      property="og:image"
+      content="https://mobicam.vn/assets/images/mc012.png?v=0.1"
+    />
+
+    <meta
+      name="facebook-domain-verification"
+      content="mwno5jfbxfv9f69o6oivj5f2vhwb3a"
+    />
+    <meta
+      name="description"
+      content="Là bộ thiết bị camera giám sát hành trình, đã được cấp đầy đủ các chứng nhận theo quy định như TCVN13396 của Bộ KHCN, QCVN55, QCVN117 của Bộ TTTT và QCVN31 của Bộ GTVT."
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.css"
+    />
+
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tippy.js@6/animations/scale.css"
+    />
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <title>Mobicam-Camera giám sát hành trình</title>
+    <%- include('../partials/head.ejs') %>
+  </head>
+  <style>
+    @keyframes tippySlide {
+      0% {
+        transform: translateY(-10px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .tippy-box[data-state="visible"] {
+      animation-name: tippySlide !important; /* Sử dụng !important để ghi đè các quy tắc mặc định nếu cần */
+      animation-duration: 0.3s;
+    }
+
+    .tippy-box[data-state="hidden"] {
+      opacity: 0;
+    }
+  </style>
+
+  <body>
+    <input
+      type="file"
+      accept="image/*"
+      id="image_change"
+      data-name="image"
+      class="d-none"
+    />
+    <div class="wrapper position-relative wrapper_edit_landing">
+      <%- include('../partials/header.ejs') ,{headerSection,lang} %>
+      <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+          />
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+          />
+        </symbol>
+        <symbol
+          id="exclamation-triangle-fill"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+          />
+        </symbol>
+      </svg>
+
+      <span id="user_role" class="d-none"><%= roles %></span>
+      <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <svg
+          class="bi flex-shrink-0 me-2"
+          width="24"
+          height="24"
+          role="img"
+          aria-label="Warning:"
+        >
+          <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+        <div>
+          Lưu ý ảnh tải lên chỉ được phép dưới 500kb và chiều dài ảnh không quá
+          1000px
+        </div>
+      </div>
+      <!-- modal product  -->
+      <div
+        class="modal fade"
+        id="modalProductTab"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header text-center">
+              <h2
+                class="modal-title fs-5 text-center d-block"
+                id="heading_product_modal"
+              >
+                <%= lang === 'vi' ? 'Sản phẩm' : 'Product' %>
+              </h2>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div
+              id="content_modal_product"
+              class="modal-body"
+              style="height: 80vh"
+            >
+              <div
+                id="carouselExampleFade"
+                class="carousel slide carousel-fade h-100"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-inner"></div>
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExampleFade"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExampleFade"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal video r -->
+
+      <div
+        class="modal fade"
+        id="modalVideo"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header text-center bg-dark text-light">
+              <h2
+                style="flex: 1"
+                class="modal-title fs-5 text-center d-block"
+                id="heading_product_modal"
+              >
+                12 lý do nên chọn sản phẩm của MOBICAM
+              </h2>
+              <button
+                style="border: none; font-size: 20px"
+                type="button"
+                class="bg-dark rounded-circle"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <i class="fa-solid fa-xmark text-light"></i>
+              </button>
+            </div>
+            <div id="content_modal_video" class="modal-body bg-dark">
+              <video width="100%" height="100%" controls>
+                <source src="" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="hero-section">
+        <% if (heroSection) { %> <%- heroSection %> <% } else { %>
+        <video autoplay loop muted class="hero-video">
+          <source src="/video/videoHero.mp4" type="video/mp4" />
+          Trình duyệt của bạn không hỗ trợ thẻ video.
+        </video>
+
+        <div
+          class="hero-content w-100"
+          data-step="3"
+          data-intro="Bạn có thể click vào các thành phần để sửa nội dung"
+        >
+          <h1 class="mb-3">CAMERA GIÁM SÁT HÀNH TRÌNH</h1>
+          <h4 class="text-center mb-3">Giám sát tức thì - Sử dụng bền bỉ</h4>
+          <article class="hide-on-mobile text-center">
+            <p>
+              Với hơn 5+ năm hoạt động chúng tôi hiểu rõ nhu cầu của khách hàng
+              và một thị trường nhiều tiềm năng và rộng lớn.
+            </p>
+            <p>
+              Vì vậy, sản phẩm của chúng tôi không chỉ đáp ứng các quy định hiện
+              hành, mà còn đem đến cho khách hàng một giải pháp hữu ích, giúp
+              gia tăng hiệu quả trong công tác quản lý và thúc đẩy gia tăng
+              doanh số.
+            </p>
+          </article>
+
+          <a
+            target="_blank"
+            href="https://mobicam.vn/assets/file/brochure_mobicam.pdf"
+            class="position-relative text-light text-decoration-none btn-primary rounded-pill mt-5 btn_dowloand d-inline-block"
+          >
+            Tải brochure
+            <!-- cho nay ne -->
+            <div
+              id="btn_upload_file_hero"
+              style="
+                top: 0;
+                right: 0;
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+              "
+              class="dowloand-overlay position-absolute d-flex justify-content-center align-items-center rounded-pill"
+            >
+              <i class="fa-solid fa-upload"></i>
+            </div>
+          </a>
+        </div>
+        <div class="overlay"></div>
+        <% } %>
+      </section>
+
+      <section class="method_section pt-5 pb-5">
+        <% if (typeof methodSection !== 'undefined' && methodSection) { %> <%-
+        methodSection %> <% } else { %>
+        <div class="container d-flex gap-5">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12">
+              <div
+                class="method_image h-100 img_wp position-relative hide-on-mobile show-on-pc"
+              >
+                <img
+                  class="h-100"
+                  src="/images/introduce/introduce.jpg"
+                  alt="mobicam_introduce-product"
+                />
+              </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12">
+              <div class="information">
+                <h4 class="fw-bold mb-2">Camera giám sát hành trình</h4>
+                <h3 class="text-primary fw-bold d-inline-block">
+                  MOBICAM
+
+                  <div class="dot_method d-block">
+                    <div class="wrapper_dot w-100">
+                      <div class="dot"></div>
+                    </div>
+                  </div>
+                </h3>
+
+                <div
+                  class="method_image h-100 img_wp position-relative hide-on-pc show-on-mobile method-img-res"
+                >
+                  <img
+                    class="h-100"
+                    src="/images/introduce/introduce.jpg"
+                    alt="mobicam_introduce-product"
+                  />
+                </div>
+                <article class="pt-1 pb-1">
+                  <p>
+                    Giải pháp giám sát cả đội xe, sử dụng công nghệ đỉnh cao,
+                    đem đến những trải nghiệm tuyệt vời cho người dùng.
+                  </p>
+                  <p>
+                    Bộ Camera tích hợp giám sát hành trình MobiCAM là sự kết hợp
+                    giữa nhu cầu giám sát của doanh nghiệp và yêu cầu bắt buộc
+                    của Nghị Định
+                  </p>
+                  <p>
+                    10/2020/NĐ-CP và Nghị Định 47/2022/NĐ-CP (bổ sung) của Chính
+                    Phủ. Sản phẩm đã được cấp chứng nhận tiêu chuẩn quốc gia
+                    TCVN13396 và các chứng nhận hợp quy khác như: QCVN55,
+                    QCVN117, QCVN31.
+                  </p>
+                </article>
+                <div class="list_introduce mt-3">
+                  <div class="row">
+                    <%- include('../partials/certificert.ejs') %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </section>
+
+      <section id="the-best-feture-section" class="the-best-feture-section">
+        <% if (typeof fetureSection !== 'undefined' && fetureSection) { %> <%-
+        fetureSection %> <% } else { %>
+        <div class="container">
+          <h2 class="text-primary text-center fw-bold mb-2">
+            Tính năng ưu việt
+          </h2>
+          <div class="wrapper_dot">
+            <div class="dot"></div>
+          </div>
+
+          <div class="list-best-feture mt-5">
+            <div class="row list" id="sortableList"></div>
+          </div>
+        </div>
+
+        <section class="aboutus">
+          <div class="container">
+            <div
+              style="padding: 40px"
+              class="col-lg-12 col-md-12 col-sm-12 bg-white inner"
+            >
+              <h2 class="text-primary text-center fw-bold mb-2">
+                Về chúng tôi
+              </h2>
+              <div class="wrapper_dot">
+                <div class="dot"></div>
+              </div>
+              <div class="content mt-5">
+                <div class="row">
+                  <div
+                    class="col-lg-7 col-md-7 col-sm-12 main-thumb position-relative img_wp"
+                  >
+                    <img
+                      src="/images/about-us/main-thumb.jpg"
+                      alt="mobicam_main-thumb"
+                    />
+                  </div>
+                  <div
+                    class="col-lg-5 col-md-5 col-sm-12 sub-thumb hide-on-mobile"
+                  >
+                    <div class="img_wp position-relative">
+                      <img
+                        class="about_image mb-2"
+                        src="/images/about-us/top-sub-thumb.jpg"
+                        alt="mobicam_about"
+                      />
+                    </div>
+                    <div class="img_wp position-relative">
+                      <img
+                        class="about_image"
+                        src="/images/about-us/bottom-sub-thumb.jpg"
+                        alt="mobicam_about"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <article class="col-md-12">
+                    <p>
+                      Chúng tôi, những kỹ sư trẻ với niềm đam mê và mong muốn
+                      tạo ra những sản phẩm công nghệ có tính năng ưu việt và sử
+                      dụng cho các phương tiện vận tải.
+                    </p>
+                    <p>
+                      Chúng tôi lấy sự tận tâm làm tiêu chuẩn hành động, lấy
+                      chất lượng làm mục tiêu để phát triển. MobiCAM là nơi khởi
+                      đầu cho niềm tin và ước mơ của chúng tôi trong quá trình
+                      chinh phục người dùng và hướng đến sự phát triển bền vững.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <% } %>
+      </section>
+
+      <section
+        class="achieve-section d-flex align-items-center position-relative"
+      >
+        <% if (typeof achieveSection !== 'undefined' && achieveSection) { %> <%-
+        achieveSection %> <% } else { %>
+        <div class="overlay"></div>
+        <div class="container">
+          <div class="row align-items-end">
+            <div class="col-lg-3 col-sm-6 col-md-3 mb-5">
+              <div class="item text-light text-center">
+                <div class="item_img-container">
+                  <img
+                    src="https://mobicam.vn/public/uploads/files/about2/1656987789_5fc414f86afbe5821ccd.png"
+                    alt="mobicam_achieve"
+                    class="about_img"
+                  />
+                </div>
+                <div class="item_achieve-number year_develop">
+                  <span class="sub__number" akhi="5">6</span>
+                  <span class="achieve_item-plus"
+                    ><i class="fas fa-plus"></i
+                  ></span>
+                </div>
+                <span class="achieve_item-text">Năm phát triển</span>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3 mb-5">
+              <div class="item text-light text-center">
+                <div class="item_img-container">
+                  <img
+                    src="https://mobicam.vn/public/uploads/files/about2/1656987834_7c9f4dd2427bd3cc7c3e.png"
+                    alt="mobicam_achieve"
+                    class="about_img"
+                  />
+                </div>
+                <div class="item_achieve-number customer">
+                  <span class="sub__number" akhi="5">1500</span>
+                  <span class="achieve_item-plus"
+                    ><i class="fas fa-plus"></i
+                  ></span>
+                </div>
+                <span class="achieve_item-text">Khách hàng</span>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3 mb-5">
+              <div class="item text-light text-center">
+                <div class="item_img-container">
+                  <img
+                    src="https://mobicam.vn/public/uploads/files/about2/1656987873_1e5247177cbc9f4f9c7d.png"
+                    alt="mobicam_achieve"
+                    class="about_img"
+                  />
+                </div>
+                <div class="item_achieve-number user">
+                  <span class="sub__number" akhi="5">5000</span>
+                  <span class="achieve_item-plus"
+                    ><i class="fas fa-plus"></i
+                  ></span>
+                </div>
+                <span class="achieve_item-text">Người dùng</span>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3 mb-5">
+              <div class="item text-light text-center">
+                <div class="item_img-container">
+                  <img
+                    src="https://mobicam.vn/public/uploads/files/about2/1656987915_10cbcb7ca0312e75bfbd.png"
+                    alt="mobicam_achieve"
+                    class="about_img"
+                  />
+                </div>
+                <div class="item_achieve-number viehical">
+                  <span class="sub__number">20000</span>
+                  <span class="achieve_item-plus"
+                    ><i class="fas fa-plus"></i
+                  ></span>
+                </div>
+                <span class="achieve_item-text">Phương tiện</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </section>
+
+      <section id="benifit" class="benifit-section pt-5 pb-5">
+        <% if (typeof benifitSection !== 'undefined' && benifitSection) { %> <%-
+        benifitSection %> <% } else { %>
+        <div class="container">
+          <h2 class="text-primary text-center fw-bold mb-2">
+            Lợi ích của khách hàng
+          </h2>
+          <div class="wrapper_dot">
+            <div class="dot"></div>
+          </div>
+          <div class="content row mt-5">
+            <div class="left-content col-lg-5 col-md-6 col-sm-12 mb-5">
+              <img
+                style="width: 400px; height: 320px"
+                class="main_img_content_benifit"
+                src="https://mobicam.vn/assets/images/benefit.png"
+                alt="mobicam_img_content_benifit"
+              />
+
+              <div class="reasion mt-5 gap-3 position-relative">
+                <div
+                  data-video="https://mobicam.vn/uploads/video/12lydochon.mp4"
+                  class="ytb d-flex align-items-center"
+                  id="openPopup_video"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalVideo"
+                >
+                  <img
+                    alt="mobicam_ytb_reason"
+                    src="https://mobicam.vn/uploads/ytb.png"
+                    class="benifit_img2"
+                    style="width: 70px"
+                  />
+                  <p
+                    class="fw-bold"
+                    style="
+                      font-size: 1.1em;
+                      font-weight: 500;
+                      margin-left: 15px;
+                      line-height: 1.5em;
+                    "
+                  >
+                    12 lý do nên chọn sản phẩm<br />của MOBICAM
+                  </p>
+                </div>
+                <!-- cho nay ne -->
+                <button
+                  id="btn_upload_reason_video"
+                  class="ms-4 mt-3 border border-primary rounded-circle position-absolute"
+                >
+                  <i class="fa-solid fa-upload"></i>
+                </button>
+              </div>
+            </div>
+            <div class="right-content col-lg-7 col-md-6 col-sm-12 ps-5"></div>
+          </div>
+        </div>
+        <% } %>
+      </section>
+
+      <section id="section-experience" class="section-experience">
+        <% if (typeof experienceSection !== 'undefined' && experienceSection) {
+        %> <%- experienceSection %> <% } else { %>
+
+        <div class="experience_wrapper" id="experience">
+          <div class="experience_decor">
+            <section>
+              <div class="experience_group">
+                <div class="container position-relative">
+                  <div class="experience_left">
+                    <h3 class="experience_left-title font-title">
+                      trải nghiệm ứng dụng <br />
+                      web-app mobicam
+                    </h3>
+                    <div class="experience_left-desc">
+                      <p>
+                        Tải app và quét mã QRcode để trải nghiệm ngay cùng chúng
+                        tôi
+                      </p>
+                    </div>
+                    <div class="experience_left-dowload">
+                      <div class="experience_dowload-item">
+                        <div class="experience_dowload-app">
+                          <a href="https://app.mobicam.vn/app">
+                            <img
+                              src="/images/dowloand/chplay.png"
+                              alt="mobicam_chplay"
+                              class="img_dowload-app"
+                            />
+                          </a>
+                        </div>
+                        <div class="experience_dowload-app">
+                          <a
+                            href="https://apps.apple.com/vn/app/mobicam-vn/id1537752917"
+                          >
+                            <img
+                              src="/images/dowloand/appstore.png"
+                              alt="mobicam_appstore"
+                              class="img_dowload-app"
+                            />
+                          </a>
+                        </div>
+                      </div>
+                      <div class="experience_dowload-item">
+                        <div class="experience_dowload-qr img_wp">
+                          <img
+                            src="/images/dowloand/qr.jpg"
+                            alt="mobicam_qr-code"
+                            class="img_dowload-qr"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="experience_right hide-on-mobile">
+                    <div class="experience_right-group">
+                      <div class="experience_right-item">
+                        <img
+                          src="/images/dowloand/phone_left.png"
+                          alt="mobicam_phone_left"
+                          class="experience_right-img animation-float"
+                        />
+                      </div>
+                      <div class="experience_right-item">
+                        <img
+                          src="/images/dowloand/phone_right.png"
+                          alt="mobicam_phone_right"
+                          class="experience_right-img animation-float"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <% } %>
+      </section>
+
+      <section
+        id="section-certificert"
+        class="section-certificert"
+        style="background: #e8e9eb"
+      >
+        <div class="container overflow-hidden">
+          <% if (typeof certificertHeading !== 'undefined' &&
+          certificertHeading) { %> <%- certificertHeading %> <% } else { %>
+          <h2 class="text-primary text-center fw-bold mb-2">Giấy chứng nhận</h2>
+
+          <% } %>
+          <div class="wrapper_dot">
+            <div class="dot"></div>
+          </div>
+          <div class="list-certificate mt-4 owl-carousel owl-theme">
+            <% if (typeof certificertSection !== 'undefined' &&
+            certificertSection) { %> <%- certificertSection %> <% } else { %> <%
+            } %>
+          </div>
+        </div>
+      </section>
+
+      <section id="category" class="category pt-5">
+        <div class="container">
+          <% if (typeof categoriesSection !== 'undefined' && categoriesSection)
+          { %> <%- categoriesSection %> <% } else { %>
+          <h2 class="text-primary text-center fw-bold mb-2">
+            Danh mục sản phẩm
+          </h2>
+
+          <% } %>
+
+          <div class="wrapper_dot">
+            <div class="dot"></div>
+          </div>
+          <div class="content mt-3">
+            <ul
+              class="nav nav-pills mb-3 justify-content-center tab_btns_horizal"
+            >
+              <% for (let i = 0; i < categories.length; i++) { %>
+              <li
+                data-id="<%= categories[i].id %>"
+                id="<%= i == 0 ? 'defaultOpenCat' : '' %>"
+                onclick="hanndleOpenTabCat(event, '<%= categories[i].id %>');"
+                class="nav-item position-relative col-lg-4 col-sm-12"
+              >
+                <button class="nav-link nav-link-horizal">
+                  <div class="btn-inner">
+                    <div
+                      class="icon-box <% if (i == 1 || i == 2) { %> align-items-center <% } %>"
+                    >
+                      <% if(i == 0) { %>
+                      <i class="fi fi-sr-webcam"></i>
+                      <% } else if(i == 1) { %>
+                      <i class="fi fi-sr-router"></i>
+                      <% } else { %>
+                      <i class="fa-solid fa-toolbox"></i>
+                      <% } %>
+                    </div>
+                    <h4><%= categories[i].name %></h4>
+                  </div>
+                </button>
+              </li>
+              <% } %>
+            </ul>
+            <div id="content_tab_product">
+              <% for (let i = 0; i < categories.length; i++) { %>
+              <div class="tab-content" id="cat_<%= categories[i].id %>">
+                <% let products = categories[i].products; %>
+                <div class="tab-pane fade show active">
+                  <div class="row pt-5 pb-4 position-relative">
+                    <div class="col-lg-5">
+                      <div
+                        style="
+                          width: 320px;
+                          height: 300px;
+                          max-width: unset;
+                          visibility: hidden;
+                        "
+                        class="img-block-hidden"
+                      ></div>
+                      <div
+                        style="max-height: 150px; overflow: scroll"
+                        class="wp_name_product"
+                      >
+                        <% for (let j = 0; j < products.length; j++) { %>
+                        <div
+                          class="position-relative name-product name-product_<%=categories[i].id%> <%= j == 0 ? 'defaultOpenProduct' : '' %>"
+                          onclick="hanndleOpenTabProduct(event, 'product_<%= products[j].id%>', '<%=categories[i].id%>')"
+                        >
+                          <p
+                            style="border-radius: 10px"
+                            class="mb-2 bg-primary pt-1 ps-3 pb-1 text-light product_name_btn cursor-pointer"
+                          >
+                            <span>
+                              <i class="fa-regular fa-circle-check"></i>
+                            </span>
+                            <span class="cursor-pointer"
+                              ><%= products[j].productname %></span
+                            >
+                            <span
+                              data-productid="<%= products[j].id %>"
+                              class="btn_edit_product position-absolute"
+                              style="right: 10px"
+                              ><i class="fa-regular fa-pen-to-square"></i
+                            ></span>
+                          </p>
+                        </div>
+                        <% } %>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                      <% for (let j = 0; j < products.length; j++) { %>
+                      <div
+                        style="border-radius: 10px"
+                        id="product_<%= products[j].id %>"
+                        class="desc p-3 border border-primary cat_<%= categories[i].id %>"
+                      >
+                        <article class="article_product">
+                          <%-products[j].productdesc %>
+                        </article>
+                        <div class="thumb_product">
+                          <div class="wp_thumb_product_<%=products[j].id %>">
+                            <% for(let k = 0; k < products[j].images.length;
+                            k++) { %>
+
+                            <img
+                              style="
+                                width: 320px;
+                                height: 300px;
+                                max-width: unset;
+                              "
+                              data-index="<%= k %>"
+                              class="<%= k === 0 ? 'active' : '' %>"
+                              src="<%= products[j].images[k] %>"
+                              alt="mobicam_product"
+                            />
+
+                            <% } %>
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="news" class="news pt-5 pb-5">
+        <div class="container">
+          <% if (typeof newsSection !== 'undefined' && newsSection) { %> <%-
+          newsSection %> <% } else { %>
+          <h2 class="text-primary text-center fw-bold mb-2">Tin tức</h2>
+
+          <% } %>
+          <div class="wrapper_dot">
+            <div class="dot"></div>
+          </div>
+          <div class="content mt-4">
+            <div class="row">
+              <% for (let i = 0; i < news.length; i++) { %>
+              <div class="col-lg-4 col-md-6 col-sm-12 mb-3 position-relative">
+                <a
+                  style="border-radius: 15px"
+                  href="/news/detail/<%= news[i].id %>/<%=lang%>"
+                  class="item d-block text-decoration-none overflow-hidden h-100"
+                >
+                  <div style="height: 190px" class="thumb_new overflow-hidden">
+                    <img src="<%= news[i].img %>" alt="mobicam_news" />
+                  </div>
+                  <div
+                    class="title fw-bold pb-5 pt-2 ps-3 pe-3 text-decoration"
+                  >
+                    <%= news[i].title %>
+                  </div>
+                </a>
+                <span
+                  data-newsid="<%= news[i].id %>"
+                  style="right: 29px; bottom: 15px; cursor: pointer"
+                  class="btn_edit_news position-absolute"
+                >
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </span>
+              </div>
+              <% } %>
+
+              <div class="viewmore text-center">
+                <a
+                  href="/news/all/<%=lang %>"
+                  class="fs-5 text-decoration-underline"
+                >
+                  <% if (lang == 'vi') { %> Xem thêm <% } else { %> View more <%
+                  } %>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <%- include('../partials/footer.ejs'),{footerSection:""} %>
+    </div>
+    <%- include('../partials/foot.ejs') %>
+    <script src="/js/main.js"></script>
+    <script src="/js/editLandingPage.js"></script>
+    <script>
+      const tooltips = [
+        {
+          selector: "#btn_upload_file_hero",
+          content: "cập nhật file brochure",
+        },
+        {
+          selector: "#btn_upload_reason_video",
+          content: "cập nhật video 12 lý do",
+        },
+        {
+          selector: ".btn_edit_product",
+          content: "Chỉnh sửa sản phẩm",
+        },
+        {
+          selector: ".btn_edit_news",
+          content: "Chỉnh sửa tin tức",
+        },
+        {
+          selector: ".localtion",
+          content: "Nhập link dẫn tới trang",
+          zIndex: 9999,
+        },
+      ];
+      tooltips.forEach((tooltip) => {
+        const element = document.querySelector(tooltip.selector);
+
+        if (element) {
+          const instance = tippy(element, {
+            content: tooltip.content,
+            placement: "right",
+            trigger: "manual", 
+            hideOnClick: false,
+   
+            animation: "fade", // Custom animation
+            delay: [100, 100], // Delay for show and hide
+          });
+
+          instance.show(); // Show the tooltip immediately
+        }
+      });
+    </script>
+
+    <%- include('../partials/scriptDashboard.ejs') %>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const thumbProducts = document.querySelectorAll(".thumb_product");
+
+        thumbProducts.forEach((thumbProduct) => {
+          const images = thumbProduct.querySelectorAll("img");
+          const totalImages = images.length;
+          let currentIndex = 0;
+          let startX = 0;
+          let isHovered = false; // Biến để kiểm tra hover vào vùng chứa ảnh
+
+          function showImage(index) {
+            for (let i = 0; i < images.length; i++) {
+              images[i].classList.remove("active");
+            }
+            images[index].classList.add("active");
+          }
+
+          thumbProduct.addEventListener("mouseenter", function () {
+            isHovered = true;
+          });
+
+          thumbProduct.addEventListener("mouseleave", function () {
+            isHovered = false;
+          });
+
+          thumbProduct.addEventListener("mousemove", function (e) {
+            if (!isHovered) return; // Chỉ xử lý khi đang hover vào vùng chứa ảnh
+
+            const currentX = e.clientX;
+            const diffX = currentX - startX;
+
+            if (Math.abs(diffX) > 20) {
+              // Độ nhạy kéo (số pixel để thay đổi ảnh)
+              if (diffX > 0) {
+                currentIndex = (currentIndex - 1 + totalImages) % totalImages; // Kéo sang phải, giảm chỉ số ảnh
+              } else {
+                currentIndex = (currentIndex + 1) % totalImages; // Kéo sang trái, tăng chỉ số ảnh
+              }
+              showImage(currentIndex);
+              startX = currentX; // Đặt lại startX để tính toán lần kéo tiếp theo
+            }
+          });
+
+          // Hiển thị ảnh đầu tiên khi trang được tải
+          showImage(currentIndex);
+        });
+      });
+    </script>
+  </body>
+</html>

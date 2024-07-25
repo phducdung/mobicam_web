@@ -1,0 +1,13 @@
+.fancybox-button--arrow_left{
+    left: 400px !important;
+}
+
+.fancybox-button--arrow_right
+{
+    right: 400px !important;
+}
+.fancybox-button div
+{
+    background: var(--B60);
+    color: white;
+}

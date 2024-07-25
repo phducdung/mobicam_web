@@ -1,0 +1,153 @@
+<header class="">
+  <% if (headerSection) { %> <%- headerSection %>
+      <% } else { %>
+        <div id="save_edit" class="d-flex justify-content-end bg-light gap-1 p-1 d-none">
+          <button data-lang="<%=lang%>" class="btn btn-primary btn-sm" id="btn_save_edit">
+            Lưu <i class="fa-regular fa-floppy-disk"></i>
+          </button>
+          <!-- <button class="btn btn-danger btn-sm" id="btn_cancel_edit">remove</button> -->
+          <button class="btn btn-success d-block" id="btn_restore">Mặc định</button>
+          <!-- check variable lang -->
+          <% if (lang=='en' ) { %>
+            <a href="/admin/editLandingPage/vi" class="btn btn-info d-block" id="btn_switch_vi">
+              <i class="fa-solid fa-repeat"></i> sang version Tiếng Việt
+            </a>
+            <% } else { %>
+              <a href="/admin/editLandingPage/en" class="btn btn-info d-block" id="btn_switch_en">
+                <i class="fa-solid fa-repeat"></i>sang version Tiếng Anh
+              </a>
+              <% } %>
+        </div>
+        <div class="header-top hide-on-mobile">
+          <div class="container d-flex justify-content-between aligns-item-center">
+            <div class="contact">
+              <span class="text-light">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <span class="text-light"> mobicam_v2@gmail.com </span>
+            </div>
+            <div class="localtion">
+              <a 
+              class="position-relative"
+              href="https://www.google.com/maps/place/TRUNG+T%C3%82M+D%E1%BB%8ACH+V%E1%BB%A4+KH%C3%81CH+H%C3%80NG+MID+VI%E1%BB%86T+NAM/@10.8641493,106.738995,17z/data=!3m1!4b1!4m5!3m4!1s0x317527cde4070bbf:0xf3ac3de2d1513297!8m2!3d10.8641493!4d106.738995">
+                <span class="text-light">
+                  <i class="fa-solid fa-location-dot"></i>
+                </span>
+                <span class="text-light">
+                  45 đường số 5, KDC Thăng Long Home, Tam Phú, TP. Thủ Đức
+                </span>
+                <input 
+                id="url_input_change_location"
+                type="url" 
+                class="form-control position-absoluted-none d-none" 
+                placeholder="url" 
+                value="https://www.google.com/maps/place/TRUNG+T%C3%82M+D%E1%BB%8ACH+V%E1%BB%A4+KH%C3%81CH+H%C3%80NG+MID+VI%E1%BB%86T+NAM/@10.8641493,106.738995,17z/data=!3m1!4b1!4m5!3m4!1s0x317527cde4070bbf:0xf3ac3de2d1513297!8m2!3d10.8641493!4d106.738995">
+              </a>
+            </div>
+            <div class="contact">
+              <span class="text-light">
+                <i class="fa-solid fa-phone"></i>
+              </span>
+              <span class="text-light">0899 19 19 19 </span>
+            </div>
+          </div>
+        </div>
+        <div class="header-bottom bg-white">
+          <div class="container pt-3 pb-3 position-relative">
+            <nav class="header_navigation h-100 d-flex justify-content-between align-items-center">
+              <div class="wp_btn_bar d-flex justify-content-center align-items-center show-on-mobile d-none"
+                style="width: 30px; height: 30px">
+                <i class="btn_bar fa-solid fa-bars text-light fs-3"></i>
+              </div>
+              <div class="logo">
+                <a 
+                aria-label="home"
+                href="/" class="d-block">
+                  <img class="hide-on-mobile" src="https://mobicam.vn/assets/images/logoHead.png" alt="mobicam_logo" />
+                </a>
+                <a href="/" class="d-block">
+                  <img class="show-on-mobile d-none" src="https://mobicam.vn/assets/images/mobiCam_logo.png"
+                    alt="mobicam_logo" />
+                </a>
+              </div>
+              <nav class="hide-on-mobile">
+                <ul class=" d-flex gap-3">
+                  <li>
+                    <a onclick="handleClickMenu(event)"
+                      href="<%= lang === 'vi' ? '/#the-best-feture-section' : '/' + lang + '/#the-best-feture-section' %>">Tính
+                      năng</a>
+                  </li>
+                  <li>
+                    <a onclick="handleClickMenu(event)"
+                      href="<%= lang === 'vi' ? '/#benifit' : '/' + lang + '/#benifit' %>">Lợi ích</a>
+                  </li>
+                  <li>
+                    <a onclick="handleClickMenu(event)"
+                      href="<%= lang === 'vi' ? '/#section-certificert' : '/' + lang + '/#section-certificert' %>">Chứng
+                      chỉ</a>
+                  </li>
+                  <li>
+                    <a onclick="handleClickMenu(event)"
+                      href="<%= lang === 'vi' ? '/#category' : '/' + lang + '/#category' %>">Chuyên mục</a>
+                  </li>
+                  <li>
+                    <a onclick="handleClickMenu(event)"
+                      href="<%= lang === 'vi' ? '/#news' : '/' + lang + '/#news' %>">Tin tức</a>
+                  </li>
+                  <li>
+                    <a onclick="handleClickMenu(event)"
+                      href="<%= lang === 'vi' ? '/#news' : '/' + lang + '/#news' %>">Hỏi đáp</a>
+                  </li>
+                </ul>
+              </nav>
+              <div class="action d-flex gap-1 justify-content-center align-items-center">
+                <div class="change-lang">
+                  <% if (lang=='en' ) { %>
+                    <a href="/vi" class="d-block" id="btn_switch_vi">
+                      <img class="lang-flag lang-vi" src="/images/flag/vietnam.png" alt="mobicam-flag-usa" />
+                    </a>
+                    <% } else { %>
+                      <a href="/en" class="d-block" id="btn_switch_en">
+                        <img class="lang-flag lang-en" src="/images/flag/usa.jpg" alt="mobicam-flag-usa" />
+                      </a>
+                      <% } %>
+                </div>
+                <a target="_blank" href="https://my.mobicam.vn/login" aria-label="mobicam">
+                  <i class="fa-solid fa-user text-primary ms-3"></i>
+                </a>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="menu-responsive">
+          <ul class="gap-3">
+            <li>
+              <a onclick="handleClickMenu(event)"
+                href="<%= lang === 'vi' ? '/#the-best-feture-section' : '/' + lang + '/#the-best-feture-section' %>">Tính
+                năng</a>
+            </li>
+            <li>
+              <a onclick="handleClickMenu(event)"
+                href="<%= lang === 'vi' ? '/#benifit' : '/' + lang + '/#benifit' %>">Lợi ích</a>
+            </li>
+            <li>
+              <a onclick="handleClickMenu(event)"
+                href="<%= lang === 'vi' ? '/#section-certificert' : '/' + lang + '/#section-certificert' %>">Chứng
+                chỉ</a>
+            </li>
+            <li>
+              <a onclick="handleClickMenu(event)"
+                href="<%= lang === 'vi' ? '/#category' : '/' + lang + '/#category' %>">Chuyên mục</a>
+            </li>
+            <li>
+              <a onclick="handleClickMenu(event)" href="<%= lang === 'vi' ? '/#news' : '/' + lang + '/#news' %>">Tin
+                tức</a>
+            </li>
+            <li>
+              <a onclick="handleClickMenu(event)" href="<%= lang === 'vi' ? '/#news' : '/' + lang + '/#news' %>">Hỏi
+                đáp</a>
+            </li>
+          </ul>
+        </div>
+        <% } %>
+</header>
